@@ -2,16 +2,31 @@
 #define _H_HPP
 
 #include <iostream>				// required includes
+#include <fstream>
 #include <cstdlib>
+#include <vector>
 #include <map>
 using namespace std;
 
-extern map<string,string*> dat;
+struct Sym {
+	string val;
+	Sym(string);
+	vector<Sym*> nest; void push(Sym*);
+	virtual string head(); string pad(int);
+	virtual string dump(int=0);
+	virtual int size();
+};
+
+extern map<string,Sym*> pcb;
+
+struct Str:Sym { Str(string); string head(); };
+
+struct List:Sym { List(); };
 
 extern int yylex();				// lexer interface
 extern int yylineno;
 extern char* yytext;
-#define TOC(X) { yylval.s = new string(yytext); return X; }
+#define TOC(X) { yylval.o = new Sym(yytext); return X; }
 extern int yyparse();			// syntax parser interface
 extern void yyerror(string);
 #include "ypp.tab.hpp"

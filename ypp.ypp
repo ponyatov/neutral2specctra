@@ -1,11 +1,22 @@
 %{
 #include "hpp.hpp"
 %}
-%defines %union { string* s; }
-%token <s> SYM B_UNITS MM
-%type <s> ex
+%defines %union { Sym*o; }
+%token <o> SYM NUM STR
+%token <o> BOARD
+%token <o> B_UNITS MM
+%token <o> B_ATTR
+%type <o> ex scalar list pair
 %%
-REPL : | REPL ex { cout << "<"<<*$2<<">" << endl; } ;
-ex : SYM
-	| B_UNITS MM { $$=$1; dat[*$1]=$2; };
+REPL : | REPL ex			{ cout << $2->dump() << endl; } ;
+scalar : SYM | NUM | STR ;
+ex : scalar
+	| BOARD SYM				{ $$=$1; pcb[$1->val]=$2; }
+	| B_UNITS MM			{ $$=$1; pcb[$1->val]=$2; }
+	| B_ATTR STR STR list	{ $$=$2; pcb[$2->val]=$4; }
+;
+pair : NUM NUM				{ $$=new List(); $$->push($1); $$->push($2); } ;
+list :						{ $$=new List(); }
+	| list pair				{ $$=$1; $$->push($2); }
+;
 %%

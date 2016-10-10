@@ -1,8 +1,25 @@
 %{
 #include "hpp.hpp"
+string LexString;
 %}
+%x lexstring
 %option noyywrap
+S [\+\-]?
+N [0-9]+
 %%
-#[^\n]*\n	{}
-B_UNITS		TOC(B_UNITS)
-mm			TOC(MM)
+#[^\n]*\n		{}
+
+'				{BEGIN(lexstring); LexString="";}
+<lexstring>'	{BEGIN(INITIAL); yylval.o = new Str(LexString); return STR;}
+<lexstring>.	{LexString+=yytext[0];}
+
+^BOARD			TOC(BOARD)
+
+^B_UNITS		TOC(B_UNITS)
+mm				TOC(MM)
+
+^B_ATTR			TOC(B_ATTR)
+
+{S}{N}\.{N}		TOC(NUM)
+
+[a-zA-Z0-9_]+	TOC(SYM)
