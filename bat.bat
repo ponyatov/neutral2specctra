@@ -1,1 +1,1 @@
-@gvim -p Makefile bat.bat
+@gvim -p WPx5_neutral.txt log.log Makefile bat.bat
