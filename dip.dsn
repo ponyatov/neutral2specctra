@@ -1,0 +1,74 @@
+(PCB ''
+  (parser
+    (space_in_quoted_tokens on)
+    (string_quote ')
+    (host_cad  'PCB Layout')
+    (host_version  10)
+  )
+  (resolution mil 1000)
+  (structure
+    (boundary(path signal 13.12335   16.27296 966.19160   596.32545 966.19160   596.32545 283.80839   16.27296 283.80839   16.27296 966.19160   16.27296 966.19160 )
+    )
+    (via  DipViaStyle_0
+    )
+    (grid via   3.24803)
+    (grid wire   3.24803)
+    (grid place   3.24803)
+    (rule(clearance  12.99212))
+    (rule(width  12.99212))
+    (layer Top
+      (type signal)
+    )
+    (layer Bottom
+      (type signal)
+    )
+    (keepout
+      (path signal 0.03937
+        -1100 600
+        1150 1350
+        50 -650
+        50 400
+        -1100 600
+      )
+    )
+  )
+  (placement
+    (component SOIC-16/150mil_U1
+      (place U1 306.29921 624.99999 front 0
+      )
+    )
+  )
+  (library
+    (image SOIC-16/150mil_U1
+      (outline(path Top  6.56167 145.66929 196.83464 145.66929 -196.83464 -145.66929 -196.83464 -145.66929 196.83464 145.66929 196.83464)
+      )
+      (pin 0 1 -106.29921 175.00000)
+      (pin 0 2 -106.29921 124.99999)
+      (pin 0 3 -106.29921 74.99999)
+      (pin 0 4 -106.29921 24.99999)
+      (pin 0 5 -106.29921 -24.99999)
+      (pin 0 6 -106.29921 -74.99999)
+      (pin 0 7 -106.29921 -124.99999)
+      (pin 0 8 -106.29921 -175.00000)
+      (pin 0 9 106.29921 -175.00000)
+      (pin 0 10 106.29921 -124.99999)
+      (pin 0 11 106.29921 -74.99999)
+      (pin 0 12 106.29921 -24.99999)
+      (pin 0 13 106.29921 24.99999)
+      (pin 0 14 106.29921 74.99999)
+      (pin 0 15 106.29921 124.99999)
+      (pin 0 16 106.29921 175.00000)
+    )
+    (padstack DipViaStyle_0
+      (shape(circle Top  40))
+      (shape(circle Bottom  40))
+    )
+    (padstack 0
+      (shape(rect Top  -39.37007 -11.81102 39.37007 11.81102))
+    )
+  )
+  (network
+  )
+  (wiring
+  )
+)
