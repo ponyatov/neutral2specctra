@@ -2,21 +2,32 @@
 #include "hpp.hpp"
 %}
 %defines %union { Sym*o; }
-%token <o> SYM NUM STR
+%token <o> EOL SYM NUM STR
 %token <o> BOARD
 %token <o> B_UNITS MM
 %token <o> B_ATTR
-%type <o> ex scalar list pair
+%token <o> P_SHAPE CIRCLE RECTANGLE
+%type <o> ex scalar list pair fig
 %%
-REPL : | REPL ex			{ cout << $2->dump() << endl; } ;
+REPL : | REPL EOL | REPL ex			{ cout << $2->dump() << endl; } ;
 scalar : SYM | NUM | STR ;
+fig :
+	  CIRCLE NUM			{ $$=$1; $1->push($2); }
+	| RECTANGLE NUM NUM		{ $$=$1; $1->push($2); $1->push($3); }
+;
 ex : scalar
 	| BOARD SYM				{ $$=$1; pcb[$1->val]=$2; }
 	| B_UNITS MM			{ $$=$1; pcb[$1->val]=$2; }
 	| B_ATTR STR STR list	{ $$=$2; pcb[$2->val]=$4; }
+	| P_SHAPE SYM SYM list EOL	{ $$=$1;
+							$1->lookup["name"]=$2; pcb["pad"]->lookup[$2->val]=$$;
+							$1->lookup["layer"]=$3; pcb["layer"]->lookup[$3->val]=$3;
+							$1->lookup["geom"]=$4->nest[0]; }
+	| fig
 ;
 pair : NUM NUM				{ $$=new List(); $$->push($1); $$->push($2); } ;
 list :						{ $$=new List(); }
 	| list pair				{ $$=$1; $$->push($2); }
+	| list ex				{ $$=$1; $$->push($2); }
 ;
 %%

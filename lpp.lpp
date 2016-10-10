@@ -3,11 +3,13 @@
 string LexString;
 %}
 %x lexstring
-%option noyywrap
+%option noyywrap yylineno
 S [\+\-]?
 N [0-9]+
 %%
 #[^\n]*\n		{}
+
+\n				TOC(EOL)
 
 '				{BEGIN(lexstring); LexString="";}
 <lexstring>'	{BEGIN(INITIAL); yylval.o = new Str(LexString); return STR;}
@@ -19,6 +21,10 @@ N [0-9]+
 mm				TOC(MM)
 
 ^B_ATTR			TOC(B_ATTR)
+
+^P_SHAPE		TOC(P_SHAPE)
+CIRCLE			TOC(CIRCLE)
+RECTANGLE		TOC(RECTANGLE)
 
 {S}{N}\.{N}		TOC(NUM)
 
