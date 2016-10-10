@@ -1,3 +1,8 @@
-%option noyywrap main
+%{
+#include "hpp.hpp"
+%}
+%option noyywrap
 %%
 #[^\n]*\n	{}
+B_UNITS		TOC(B_UNITS)
+mm			TOC(MM)
