@@ -1,0 +1,3 @@
+%option noyywrap main
+%%
+#[^\n]*\n	{}
