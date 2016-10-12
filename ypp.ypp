@@ -7,6 +7,7 @@
 %token <o> B_UNITS MM
 %token <o> B_ATTR
 %token <o> P_SHAPE CIRCLE RECTANGLE
+%token <o> NET
 %type <o> ex scalar list pair fig
 %%
 REPL : | REPL EOL | REPL ex			{ cout << $2->dump() << endl; } ;
@@ -24,6 +25,7 @@ ex : scalar
 							$1->lookup["layer"]=$3; pcb["layer"]->lookup[$3->val]=$3;
 							$1->lookup["geom"]=$4->nest[0]; }
 	| fig
+	| NET SYM				{ $$=$1; $1->push($2); pcb["net"]->lookup[$2->val]=$2; }
 ;
 pair : NUM NUM				{ $$=new List(); $$->push($1); $$->push($2); } ;
 list :						{ $$=new List(); }

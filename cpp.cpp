@@ -26,7 +26,17 @@ int main() {
 	for (auto it=LE->lookup.begin(),e=LE->lookup.end();it!=e;it++)
 		dsn << "\t\t(layer " << it->first << " (type signal))\n";
 	// /
+	// \ vias
+	dsn << "\t\t(via via)\n";
+	// /
 	dsn << "\t)\n";
+	// \ network
+	dsn << "\t(network\n";
+	Sym *NW = pcb["net"]; int nets=0;
+	for (auto it=NW->lookup.begin(),e=NW->lookup.end();it!=e && nets<125;it++,nets++)
+			dsn << "\t\t(net " << it->first << ")\n";
+	dsn << "\t)\n";
+	// /
 	dsn << ")\n";
 }
 
@@ -54,4 +64,5 @@ map<string,Sym*> pcb;
 void pcb_init() {
 	pcb["pad"]=new Sym("pad");
 	pcb["layer"]=new Sym("layer");
+	pcb["net"]=new Sym("net");
 }

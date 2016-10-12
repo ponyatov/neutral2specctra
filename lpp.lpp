@@ -26,6 +26,8 @@ mm				TOC(MM)
 CIRCLE			TOC(CIRCLE)
 RECTANGLE		TOC(RECTANGLE)
 
+^NET			TOC(NET)
+
 {S}{N}\.{N}		TOC(NUM)
 
 [a-zA-Z0-9_]+	TOC(SYM)
