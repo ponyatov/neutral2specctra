@@ -5,3 +5,4 @@ log.log
 ypp.tab.?pp
 lex.yy.c
 *.dsn
+*.do
